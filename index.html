@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html ng-app="catalogoSeries">
+  <head>
+    <meta charset="utf-8">
+    <title>NG-WATCH</title>
+
+    <link rel="stylesheet" type="text/css" href="lib/bootstrap/bootstrap.css">
+    <link rel="stylesheet" href="lib/css/Style.css"> <!--utiliza o style do stylesheet do arquivo css-->
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="lib/angular/angular.js"></script> <!-- importamos o angular.js -->
+    <script src="lib/bootstrap/bootstrap.js"></script>
+    <script src="lib/jquery/jquery-3.2.1.js">
+    </script>
+
+    <script>
+
+      angular.module("catalogoSeries", []);
+      angular.module("catalogoSeries").controller("catalogoSeriesCtrl", function($scope, $http){
+
+        $scope.series = [];
+        $scope.profile = [];
+        $scope.watchList = [];
+
+        $scope.buscaSeries = function(nomeSerie){
+           $http.get('https://omdbapi.com\t?s='+ nomeSerie + '&type=series&apikey=93330d3c').then(function (response) {
+           $scope.series = response.data.Search;
+           })
+         }
+
+        $scope.addSerieWatchlist = function (serie) {
+          console.log("fiz");
+          if(existeSerieWatchList(serie)){
+            alert("Already in your WatchList!");
+          }else{
+            $scope.watchList.push(angular.copy(serie));
+          }
+        }
+
+        $scope.addSerieProfile = function (serie) {
+          console.log("fiz");
+        	let serieID = $scope.profile.map(function (serie){
+        	return serie.imdbID;
+            });
+       	 	let serieIndex = serieID.indexOf(serie.imdbID);
+        	if(serieIndex == -1){
+        	   $http.get('https://omdbapi.com/?i=' + serie.imdbID +'&plot=full&apikey=93330d3c').then(function (response) {
+        		     $scope.profile.push(angular.copy(response.data));
+           	})
+          } else {
+          	alert("Already in your Profile!");
+          }
+        }
+
+        $scope.removeSerieProfile = function (serie) {
+          console.log("fiz");
+           let index = $scope.profile.indexOf(serie);
+           if (index > -1) {
+             $scope.profile.splice(index, 1);
+          }
+        }
+
+        $scope.removeSerieWatchList = function (serie) {
+          console.log("fiz");
+           let index = $scope.watchList.indexOf(serie);
+           if (index > -1) {
+             $scope.watchList.splice(index, 1);
+          }
+        }
+
+        var existeSerieWatchList = function(serie) {
+              for(i = 0; i < $scope.watchList.length; i++) {
+                if(serie.imdbID == $scope.watchList[i].imdbID) {
+                  return true;
+                }
+              }
+              return false;
+        };
+
+
+        $scope.guardarClassificacao = function (serie, episodio, classificacao) {
+          console.log("fiz");
+          serie.classificacao = classificacao;
+          serie.episodio = episodio;
+          delete $scope.episodio;
+          delete $scope.classificacao;
+        };
+
+      });
+
+    </script>
+
+  </head>
+
+  <body class="belowNavbar" ng-controller="catalogoSeriesCtrl">
+
+
+<div class="container">
+  <nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+      <div class="navbar-header">
+        <!-- <a class="navbar-brand">NG-WATCH</a> -->
+      </div>
+      <ul class="nav navbar-nav">
+        <li class="active" ><a href="#home" data-toggle="tab">NG-WATCH</a></li>
+        <li><a href="#watchList" data-toggle="tab">Watchlist</a></li>
+        <li><a href="#profile" data-toggle="tab">Profile</a></li>
+      </ul>
+      <form class="navbar-form navbar-left">
+        <div class="form-group">
+          <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
+        </div>
+        <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
+      </form>
+    </div>
+  </nav>
+
+  <div class="tab-content">
+
+    <div id="home" class="tab-pane in active">
+        <div class="imgContainer">
+          <div class="gallery" ng-repeat="serie in series">
+            <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297"> <!--imagem da serie aparecendo-->
+            <div class="middle">
+              <div class="text">{{serie.Title}}</div>
+              <div class="wrapper">
+                <button class="btn btn-primary"  ng-click="addSerieProfile(serie)">Add to Profile</button>
+                <button class="btn btn-primary"   ng-click="addSerieWatchlist(serie)">Add to WatchList</button>
+              </div>
+            </div>
+          </div>
+        </div>
+    </div>
+
+
+    <div id="profile" class="tab-pane in active">
+        <div class="imgContainer">
+          <div class="gallery" ng-repeat="serie in profile">
+            <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297"> <!--imagem da serie aparecendo-->
+            <div class="middle">
+              <div class="text">{{serie.Title}}</div>
+              <div class="wrapper">
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#serieInformation{{$index}}">Information</button>
+                <button data-toggle="tooltip" data-placement="top" class="btn btn-primary"  ng-click="removeSerieProfile(serie)">Remove from Profile</button>
+              </div>
+            </div>
+
+            <!-- Modal -->
+            <div class="modal fade" id="serieInformation{{$index}}" role="dialog">
+              <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+              <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                <h4 class="modal-title">{{serie.Title}}</h4>
+              </div>
+              <div class="modal-body">
+
+                <div class="row">
+                      <div class="col-sm-8" >
+                            <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297">
+                        </div>
+                        <div class="col-sm-4"><b>Sinopse:</b> {{serie.Plot}}</div>
+                        <div class="col-sm-4"><b>IMDB Classification :</b> {{serie.imdbRating}}</div>
+                      </div>
+                      <div>
+                        <b>My Classification:</b>
+                        <input ng-model="classificacao" placeholder="0 - 10"/></input>
+                      </div>
+                      <div>
+                        <b>Last Episode:</b>
+                        <input ng-model="episodio" placeholder="S:01 - E:01"/></input>
+                      </div>
+
+                    </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-primary" ng-click="guardarClassificacao(serie, episodio, classificacao)">Save</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+
+          </div>
+        </div>
+    </div>
+
+
+    <div id= "watchList" class="tab-pane">
+          <div class="imgContainer">
+            <div class="gallery" ng-repeat="serie in watchList">
+              <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297"> <!--imagem da serie aparecendo-->
+              <div class="middle">
+                <div class="text">{{serie.Title}}</div>
+                <div class="wrapper">
+                  <button class="btn btn-primary"  ng-click="addSerieProfile(serie)">Add  to  Profile</button>
+                  <button class="btn btn-primary"  ng-click="removeSerieWatchList(serie)">Remove from WatchList</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+  </div>
+
+</div>
+  </body>
+</html>
