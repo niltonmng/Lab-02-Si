@@ -10,8 +10,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="lib/angular/angular.js"></script> <!-- importamos o angular.js -->
     <script src="lib/bootstrap/bootstrap.js"></script>
-    <script src="lib/jquery/jquery-3.2.1.js">
-    </script>
+    <script src="lib/jquery/jquery-3.2.1.js"></script>
 
     <script>
 
@@ -21,6 +20,25 @@
         $scope.series = [];
         $scope.profile = [];
         $scope.watchList = [];
+        $scope.users = [];
+
+        $scope.registro = function(user){
+          if(existeUsuario(user)){
+            alert("User already existis!");
+          } else {
+            console.log("fiz");
+            $scope.users.push(user);
+          }
+        }
+
+        var existeUsuario = function(user) {
+              for(i = 0; i < $scope.users.length; i++) {
+                if(user.email == $scope.users[i].email) {
+                  return true;
+                }
+              }
+              return false;
+        };
 
         $scope.buscaSeries = function(nomeSerie){
            $http.get('https://omdbapi.com\t?s='+ nomeSerie + '&type=series&apikey=93330d3c').then(function (response) {
@@ -90,7 +108,7 @@
 
     </script>
 
-  </head>
+</head>
 
   <body class="belowNavbar" ng-controller="catalogoSeriesCtrl">
 
@@ -111,6 +129,7 @@
           <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
         </div>
         <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
+        <button class="btn btn-primary"  ng-click="registro(user)">Sign In</button>
       </form>
     </div>
   </nav>
