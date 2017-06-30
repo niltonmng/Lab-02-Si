@@ -22,12 +22,18 @@
         $scope.watchList = [];
         $scope.users = [];
 
-        $scope.registro = function(user){
+        $scope.registro = function(user, username, email, password){
           if(existeUsuario(user)){
-            alert("User already existis!");
+            alert("User already exists!");
           } else {
             console.log("fiz");
+            user.username = username;
+            user.email = email;
+            user.password = password;
             $scope.users.push(user);
+            delete $scope.username;
+            delete $scope.email;
+            delete $scope.password;
           }
         }
 
@@ -129,10 +135,45 @@
           <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
         </div>
         <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
-        <button class="btn btn-primary"  ng-click="registro(user)">Sign In</button>
+        <!-- Trigger the modal with a button -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Registro">Sign In</button>
       </form>
     </div>
   </nav>
+
+  <!-- Modal -->
+  <div class="modal fade" id="Registro" role="dialog">
+    <div class="modal-dialog">
+
+  <!-- Modal content-->
+  <div class="modal-content">
+    <div class="modal-header">
+      <button type="button" class="close" data-dismiss="modal">&times;</button>
+      <h4 class="modal-title">Register</h4>
+    </div>
+    <div class="modal-body">
+            <div>
+              <b>Username:</b>
+              <input ng-model="username" placeholder="My Name">
+            </div>
+            <div>
+              <b>Email:</b>
+              <input ng-model="email" placeholder="myemail@domain.com">
+            </div>
+            <div>
+              <b>Password:</b>
+              <input ng-model="password" placeholder="My Password">
+            </div>
+
+          </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      <button type="button" class="btn btn-primary" ng-click="registro(user, username, email, password)">Save</button>
+    </div>
+  </div>
+
+</div>
+</div>
 
   <div class="tab-content">
 
@@ -186,11 +227,11 @@
                       </div>
                       <div>
                         <b>My Classification:</b>
-                        <input ng-model="classificacao" placeholder="0 - 10"/></input>
+                        <input ng-model="classificacao" placeholder="0 - 10">
                       </div>
                       <div>
                         <b>Last Episode:</b>
-                        <input ng-model="episodio" placeholder="S:01 - E:01"/></input>
+                        <input ng-model="episodio" placeholder="S:01 - E:01">
                       </div>
 
                     </div>
