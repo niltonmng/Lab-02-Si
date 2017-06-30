@@ -46,6 +46,9 @@
               return false;
         };
 
+        $scope.login = function () { // fazer este metodo
+        }
+
         $scope.buscaSeries = function(nomeSerie){
            $http.get('https://omdbapi.com\t?s='+ nomeSerie + '&type=series&apikey=93330d3c').then(function (response) {
            $scope.series = response.data.Search;
@@ -135,13 +138,15 @@
           <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
         </div>
         <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
-        <!-- Trigger the modal with a button -->
-        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Registro">Sign In</button>
+        <!-- Trigger the modal with a button Regsistro -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Registro">Register</button>
+        <!-- Trigger the modal with a button  Login -->
+        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Login">Sign In</button>
       </form>
     </div>
   </nav>
 
-  <!-- Modal -->
+  <!-- Modal Registro-->
   <div class="modal fade" id="Registro" role="dialog">
     <div class="modal-dialog">
 
@@ -153,12 +158,12 @@
     </div>
     <div class="modal-body">
             <div>
-              <b>Username:</b>
-              <input ng-model="username" placeholder="My Name">
-            </div>
-            <div>
               <b>Email:</b>
               <input ng-model="email" placeholder="myemail@domain.com">
+            </div>
+            <div>
+              <b>Username:</b>
+              <input ng-model="username" placeholder="My Name">
             </div>
             <div>
               <b>Password:</b>
@@ -174,6 +179,37 @@
 
 </div>
 </div>
+
+<!-- Modal Login-->
+<div class="modal fade" id="Login" role="dialog">
+  <div class="modal-dialog">
+
+<!-- Modal content-->
+<div class="modal-content">
+  <div class="modal-header">
+    <button type="button" class="close" data-dismiss="modal">&times;</button>
+    <h4 class="modal-title">Sign In</h4>
+  </div>
+  <div class="modal-body">
+          <div>
+            <b>Username:</b>
+            <input ng-model="username" placeholder="My Name">
+          </div>
+          <div>
+            <b>Password:</b>
+            <input ng-model="password" placeholder="My Password">
+          </div>
+
+        </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+    <button type="button" class="btn btn-primary" ng-click="login()">Login</button>
+  </div>
+</div>
+
+</div>
+</div>
+
 
   <div class="tab-content">
 
@@ -206,7 +242,7 @@
               </div>
             </div>
 
-            <!-- Modal -->
+            <!-- Modal Info -->
             <div class="modal fade" id="serieInformation{{$index}}" role="dialog">
               <div class="modal-dialog">
 
