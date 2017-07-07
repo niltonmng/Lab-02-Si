@@ -22,24 +22,20 @@
         $scope.watchList = [];
         $scope.users = [];
 
-        $scope.registro = function(user, username, email, password){
-          if(existeUsuario(user)){
+        $scope.registro = function(userName, userEmail, userPassword){
+          if(existeUsuario(userEmail)){
             alert("User already exists!");
           } else {
             console.log("fiz");
-            user.username = username;
-            user.email = email;
-            user.password = password;
+            user = {name: userName, email: userEmail, password: userPassword}
             $scope.users.push(user);
-            delete $scope.username;
-            delete $scope.email;
-            delete $scope.password;
+            delete $scope.user;
           }
         }
 
-        var existeUsuario = function(user) {
+        var existeUsuario = function(userEmail) {
               for(i = 0; i < $scope.users.length; i++) {
-                if(user.email == $scope.users[i].email) {
+                if(userEmail == $scope.users[i].email) {
                   return true;
                 }
               }
@@ -176,7 +172,7 @@
           </div>
     <div class="modal-footer">
       <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-      <button type="button" class="btn btn-primary" ng-click="registro(user, username, email, password)">Save</button>
+      <button type="button" class="btn btn-primary" ng-click="registro(userName, userEmail, userPassword)">Save</button>
     </div>
   </div>
 
