@@ -12,26 +12,26 @@
     <script src="lib/bootstrap/bootstrap.js"></script>
     <script src="lib/jquery/jquery-3.2.1.js"></script>
     <script src="lib/scope/scope.js"></script>
-</head>
+  </head>
   <body class="belowNavbar" ng-controller="catalogoSeriesCtrl">
 
 
-<div class="container">
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="navbar-header">
-        <!-- <a class="navbar-brand">NG-WATCH</a> -->
-      </div>
-      <ul class="nav navbar-nav">
-        <li class="active" ><a href="#home" data-toggle="tab">NG-WATCH</a></li>
-        <li><a href="#watchList" data-toggle="tab">Watchlist</a></li>
-        <li><a href="#profile" data-toggle="tab">Profile</a></li>
-      </ul>
-      <form class="navbar-form navbar-left">
-        <div class="form-group">
-          <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
-        </div>
-        <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
+    <div class="container">
+      <nav class="navbar navbar-inverse">
+        <div class="container-fluid">
+          <div class="navbar-header">
+            <!-- <a class="navbar-brand">NG-WATCH</a> -->
+          </div>
+          <ul class="nav navbar-nav">
+            <li class="active" ><a href="#home" data-toggle="tab">NG-WATCH</a></li>
+            <li><a href="#watchList" data-toggle="tab">Watchlist</a></li>
+            <li><a href="#profile" data-toggle="tab">Profile</a></li>
+          </ul>
+          <form class="navbar-form navbar-left">
+            <div class="form-group">
+              <input type="text" ng-model="nomeSerie"  name="" value="" placeholder="Type the Series Name">
+            </div>
+            <button class="btn btn-primary"  ng-click="buscaSeries(nomeSerie)">Search</button>
         <div class="botoes">
           <!-- Trigger the modal with a button Regsistro -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Registro">Register</button>
@@ -100,7 +100,7 @@
         </div>
   <div class="modal-footer">
     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-    <button type="button" class="btn btn-primary" ng-click="login()">Login</button>
+    <button type="button" class="btn btn-primary" ng-click="login(userName, userPassword)">Login</button>
   </div>
 </div>
 
