@@ -128,7 +128,7 @@
 
     <div id="profile" class="tab-pane in active">
         <div class="imgContainer">
-          <div class="gallery" ng-repeat="serie in profile">
+          <div class="gallery" ng-repeat="serie in actualUser.profile">
             <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297"> <!--imagem da serie aparecendo-->
             <div class="middle">
               <div class="text">{{serie.Title}}</div>
@@ -185,7 +185,7 @@
 
     <div id= "watchList" class="tab-pane">
           <div class="imgContainer">
-            <div class="gallery" ng-repeat="serie in watchList">
+            <div class="gallery" ng-repeat="serie in actualUser.watchList">
               <img class="serie-poster" src="{{serie.Poster}}" width="200" height="297"> <!--imagem da serie aparecendo-->
               <div class="middle">
                 <div class="text">{{serie.Title}}</div>
