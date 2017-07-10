@@ -36,8 +36,8 @@
           <!-- Trigger the modal with a button Regsistro -->
           <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Registro">Register</button>
           <!-- Trigger the modal with a button  Login -->
-          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Login">Sign In</button> <!--fazer-->
-          <button type="button" class="btn btn-primary" data-target="#Logout">Sign Out</button> <!--fazer-->
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#Login">Sign In</button>
+          <button type="button" class="btn btn-primary" data-target="#Logout" ng-click="logout()">Sign Out</button>
         </div>
       </form>
     </div>
@@ -56,15 +56,15 @@
     <div class="modal-body">
             <div>
               <b>Email:</b>
-              <input ng-model="email" placeholder="myemail@domain.com">
+              <input ng-model="userEmail" placeholder="myemail@domain.com">
             </div>
             <div>
               <b>Username:</b>
-              <input ng-model="username" placeholder="My Name">
+              <input ng-model="userName" placeholder="My Name">
             </div>
             <div>
               <b>Password:</b>
-              <input ng-model="password" placeholder="My Password">
+              <input ng-model="userPassword" placeholder="My Password">
             </div>
 
           </div>
@@ -90,11 +90,11 @@
   <div class="modal-body">
           <div>
             <b>Username:</b>
-            <input ng-model="username" placeholder="My Name">
+            <input ng-model="userName" placeholder="My Name">
           </div>
           <div>
             <b>Password:</b>
-            <input ng-model="password" placeholder="My Password">
+            <input ng-model="userPassword" placeholder="My Password">
           </div>
 
         </div>
